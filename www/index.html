@@ -27,86 +27,76 @@
         </script> 
 
         <script type="text/javascript">
-            function sqlToJsDate(sqlDate){
-                //sqlDate in SQL DATETIME format ("yyyy-mm-dd hh:mm:ss.ms")
-                var sqlDateArr1 = sqlDate.split("-");
-                //format of sqlDateArr1[] = ['yyyy','mm','dd hh:mm:ms']
-                var sYear = sqlDateArr1[0];
-                var sMonth = (Number(sqlDateArr1[1]) - 1).toString();
-                var sqlDateArr2 = sqlDateArr1[2].split("T");
-                //format of sqlDateArr2[] = ['dd', 'hh:mm:ss.ms']
-                var sDay = sqlDateArr2[0];
-                var sqlDateArr3 = sqlDateArr2[1].split(":");
-                //format of sqlDateArr3[] = ['hh','mm','ss.ms']
-                var sHour = sqlDateArr3[0];
-                var sMinute = sqlDateArr3[1];
-                var sqlDateArr4 = sqlDateArr3[2].split(".");
-                //format of sqlDateArr4[] = ['ss','ms']
-                var sSecond = sqlDateArr4[0];
-                var sMillisecond = sqlDateArr4[1];
-                
-                return new Date(sYear,sMonth,sDay,sHour,sMinute,sSecond,sMillisecond);
-            }
+
             $(function() {
-                var xhr = new XMLHttpRequest();
-                for (let channel = 0; channel < 4; channel++) {
-                    var url = "/temperature/" + channel
-                    xhr.open('GET', url, false);
-                    xhr.send();
-                    var QueryAns = JSON.parse(xhr.response);
-                    var MonData = [];
-                    QueryAns.forEach(element => {
-                        MonData.push([moment(element.time), element.tempC]);
-                    });
-                    console.log(MonData)
-                    $.plot("#Graph" + channel, 
-                    [{ data: MonData, }],
-                    {
-                        hoverable:true,
-                        sorted: "descending",
-                        label:"Temperature",
-                        series: {
-                            lines: {
-                                show: true,
-                                lineWidth: 2,
-                                fill: null,
-                                color:"black",
-                            },
-                            color:"red",
-                            shadowSize: 2,
-                            highlightColor: "#FF0000",
-                        },
-                        legend:{
-                            backgroundOpacity:0.2,
-                            backgroundColor:"black",
 
-                        },
-                        yaxis: {
-                            ticks: 10,
-                            color: "#2E4A62",
-                            font:{
-                                color:"#2E4A62",
-                            }
-                        },  
-
-                        xaxis:{
-                            mode: "time",
-                            //timeformat: "%Y-%m-%d",
-                            color:"#2E4A62",
-                            ticks: 10,
-                            font:{
-                                color:"#2E4A62",
-                            }
-                        },
-                        grid: {
+                var options =
+                {
+                    hoverable:true,
+                    sorted: "descending",
+                    label:"Temperature",
+                    series: {
+                        lines: {
                             show: true,
-                            color: "#2E4A62",
-                            borderColor: "#2E4A62",
-                            backgroundColor: "white",
+                            lineWidth: 2,
+                            fill: null,
+                            color:"black",
                         },
-                    });
+                        color:"red",
+                        shadowSize: 2,
+                        highlightColor: "#FF0000",
+                    },
+                    legend:{
+                        backgroundOpacity:0.2,
+                        backgroundColor:"black",
+                        
+                    },
+                    yaxis: {
+                        ticks: 10,
+                        color: "#2E4A62",
+                        font:{
+                            color:"#2E4A62",
+                        }
+                    },  
+                    
+                    xaxis:{
+                        mode: "time",
+                        timeformat: "%m/%d %hh:%M:%S",
+                        color:"#2E4A62",
+                        ticks: 10,
+                        font:{
+                            color:"#2E4A62",
+                        }
+                    },
+                    grid: {
+                        show: true,
+                        color: "#2E4A62",
+                        borderColor: "#2E4A62",
+                        backgroundColor: "white",
+                    }
+                };
+
+                function getData(){
+                    for (let channel = 0; channel < 4; channel++) {
+                        $.ajax({
+                            url: "/temperature/" + channel,
+                            success: function(data){
+                                var MonData = [];
+                                var QueryAns = JSON.parse(data);
+                                
+                                QueryAns.forEach(element => {
+                                    MonData.push([moment(element.time), element.tempC]);
+                                });
+                                console.log(MonData)
+                                $.plot("#Graph" + channel, [{data: MonData}], options);
+                            }
+                        });
+                    }
+                    setTimeout(getData, 5000);
                 }
+                getData();
             });
+
         </script>
 
     </head>
@@ -117,38 +107,29 @@
         <div id="includedNavbar"></div>
 
         <div class="container-fluid">
-            <div class="mx-auto row" style="width: 90%">
-                <div class="mx-auto col ">
+            <div class="mx-auto row" style="width: 80%">
+                <div class="mx-auto col" style="height: 50%"">
                     <div class='flot-x-axis flot-x1-axis'>
                         <div class='flot-tick-label'>Channel 0</div>
+                        <div id="Graph0" class="biggraph"></div>
                     </div>
-                    <div id="Graph0" class="biggraph"></div>
-                </div>
-
-                <div class="mx-auto col">
+            
                     <div class='flot-x-axis flot-x1-axis'>
                         <div class='flot-tick-label'>Channel 1</div>
                         <div class="biggraph" id="Graph1"></div>
                     </div>
-                </div>
-            </div>
-            <br>
-            <div class="mx-auto row" style="width: 90%">
-                <div class="mx-auto col ">
+            
                     <div class='flot-x-axis flot-x1-axis'>
                         <div class='flot-tick-label'>Channel 2</div>
+                        <div id="Graph2" style="height: 300px"></div>
                     </div>
-                    <div id="Graph2" style="height: 300px"></div>
-                </div>
-                <div class="mx-auto col ">
+                    
                     <div class='flot-x-axis flot-x1-axis'>
                         <div class='flot-tick-label'>Channel 3</div>
+                        <div id="Graph3" style="height: 300px"></div>
                     </div>
-                    <div id="Graph3" style="height: 300px"></div>
                 </div>
             </div>
-            <br>
-            <br>
         </div>
     </body>
 </html>
