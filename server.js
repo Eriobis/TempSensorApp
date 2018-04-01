@@ -53,8 +53,8 @@ var route   = require('./app/routes/Route.js');
 var path    = require('path');
 
 app.use(express.static(__dirname + "/www"));
-app.use('/', new route(config));
-app.use('/request', new route(config));
+app.use('/',        new route(config));
+app.use('/test',    new route(config));
 //Static files for JS and CSS files
 app.use('/static', express.static(__dirname + '/www'));
 

@@ -15,14 +15,18 @@ module.exports = function(config) {
         "css" : "text/css",
     };
 
-    
     // =========================================================================//
     // GET /                                                                    //
     // =========================================================================//
    
     router.get('/', function(req, res) {
-        console.log("SQL Query done");
+        console.log("Index.html required");
         res.sendFile(path.join(__dirname + '/../../www/index.html'));
+    });
+    
+    router.get('/test', function(req, res) {
+        console.log("Index.html required");
+        res.sendFile(path.join(__dirname + '/../../www/test.html'));
     });
     
     router.post('/', function(req, res) {

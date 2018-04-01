@@ -15,7 +15,6 @@
         <script src="./flot/jquery.js"></script> 
         <script src="./flot/jquery.flot.js"></script> 
         <script src="./flot/jquery.flot.time.js"></script> 
-        <link href="./flot/examples/examples.css" rel="stylesheet" type="text/css">
         <link href="./css/graphs.css" rel="stylesheet" type="text/css">
         <link href="./open-iconic-master/font/css/open-iconic-bootstrap.css" rel="stylesheet">
         <!-- Bootstrap core CSS -->
@@ -26,78 +25,8 @@
         });
         </script> 
 
-        <script type="text/javascript">
-
-            $(function() {
-
-                var options =
-                {
-                    hoverable:true,
-                    sorted: "descending",
-                    label:"Temperature",
-                    series: {
-                        lines: {
-                            show: true,
-                            lineWidth: 2,
-                            fill: null,
-                            color:"black",
-                        },
-                        color:"red",
-                        shadowSize: 2,
-                        highlightColor: "#FF0000",
-                    },
-                    legend:{
-                        backgroundOpacity:0.2,
-                        backgroundColor:"black",
-                        
-                    },
-                    yaxis: {
-                        ticks: 10,
-                        color: "#2E4A62",
-                        font:{
-                            color:"#2E4A62",
-                        }
-                    },  
-                    
-                    xaxis:{
-                        mode: "time",
-                        timeformat: "%m/%d %hh:%M:%S",
-                        color:"#2E4A62",
-                        ticks: 10,
-                        font:{
-                            color:"#2E4A62",
-                        }
-                    },
-                    grid: {
-                        show: true,
-                        color: "#2E4A62",
-                        borderColor: "#2E4A62",
-                        backgroundColor: "white",
-                    }
-                };
-
-                function getData(){
-                    for (let channel = 0; channel < 4; channel++) {
-                        $.ajax({
-                            url: "/temperature/" + channel,
-                            success: function(data){
-                                var MonData = [];
-                                var QueryAns = JSON.parse(data);
-                                
-                                QueryAns.forEach(element => {
-                                    MonData.push([moment(element.time), element.tempC]);
-                                });
-                                console.log(MonData)
-                                $.plot("#Graph" + channel, [{data: MonData}], options);
-                            }
-                        });
-                    }
-                    setTimeout(getData, 5000);
-                }
-                getData();
-            });
-
-        </script>
+        <!-- Import the graph functions and the graph autorefresh -->
+        <script src="./graph.js"></script>
 
     </head>
     <body class="main bg-light">
