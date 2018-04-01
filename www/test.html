@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Temp Monitoring v2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <script src="./js/jquery-3.3.1.min.js"></script> 
+    <script src="./js/bootstrap.min.js"></script> 
+    <script src="./js/moment.js"></script> 
+    <script src="./flot/jquery.js"></script> 
+    <script src="./flot/jquery.flot.js"></script> 
+    <script src="./flot/jquery.flot.time.js"></script> 
+    <link href="./css/graphs.css" rel="stylesheet" type="text/css">
+    <link href="./open-iconic-master/font/css/open-iconic-bootstrap.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="graph.js"></script>
+</head>
+<body class="main">
+    <div class="container">
+        <div class="pt-5 py-2 mx-auto row">
+            <div class="bg-secondary px-1 rounded mx-auto col-xs-4 justify-text-center">
+                <h1 class="text-center text-info">Menu</h1>
+                <nav>
+                    <div class="nav nav-pills flex-column nav-justified" role="tablist">
+                        <a class="nav-item nav-link active" href="" role="tab" data-toggle="pill"> Temp Graph</a>
+                        <a class="nav-item nav-link"        href="" role="tab" data-toggle="pill"> Temp Value</a>
+                        <a class="nav-item nav-link"        href="" role="tab" data-toggle="pill"> Config</a>
+                        <a class="nav-item nav-link"        href="" role="tab" data-toggle="pill"> Void</a>
+                    </div>
+                </nav>
+            </div>
+            <div class="pl-1 rounded col-xs-8 justify-content-center" style="width:80%">
+                <nav>
+                    <div class="nav nav-pills nav-fill" role="tablist" id="graphTab">
+                        <a class="nav-item nav-link active" id="channel0_tab" href="#channel0_pane" data-toggle="pill" role="tab">Channel 1</a>
+                        <a class="nav-item nav-link"        id="channel1_tab" href="#channel1_pane" data-toggle="pill" role="tab">Channel 2</a>
+                        <a class="nav-item nav-link"        id="channel2_tab" href="#channel2_pane" data-toggle="pill" role="tab">Channel 3</a>
+                        <a class="nav-item nav-link"        id="channel3_tab" href="#channel3_pane" data-toggle="pill" role="tab">Channel 4</a>                    
+                    </div>
+                </nav>
+                <div class="container" id="graphContainer">
+                    <div class="my-4 tab-content" id="graphTabPanel">
+                        <div class=" tab-pane fade show active" id="channel0_pane" role="tabpanel">
+                            <div class='justify-content-center flot-x-axis flot-x1-axis'>
+                                <div id="Graph0" class="biggraph"></div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="channel1_pane"  role="tabpanel">
+                            <div class='justify-content-center flot-x-axis flot-x1-axis'>
+                                <div id="Graph1" class="biggraph"></div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="channel2_pane" role="tabpanel">
+                            <div class='justify-content-center flot-x-axis flot-x1-axis'>
+                                <div id="Graph2" class="biggraph"></div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="channel3_pane" role="tabpanel">
+                            <div class='justify-content-center flot-x-axis flot-x1-axis'>
+                                <div id="Graph3" class="biggraph"></div>
+                            </div>
+                        </div>
+                        <div class="my-2 row">
+                            <div class="col-6">
+                                <h5>Current Temp: </h5>
+                                <h3> <span class="badge badge-secondary">xx C</span></h3>
+                            </div>
+                            <div class="col-6">
+                                <h5>Average Temp: </h5> 
+                                <h3> <span class="badge badge-secondary">xx C</span></h3>
+                            </div>
+                        </div>
+                        <div class="my-2 row">
+                            <div class="col-6">
+                                <h5>Min Temp: </h5>
+                                <h3> <span class="badge badge-secondary">xx C</span></h3>
+                            </div>
+                            <div class="col-6">
+                                <h5>Max Temp: </h5>
+                                <h3> <span class="badge badge-secondary">xx C</span></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
