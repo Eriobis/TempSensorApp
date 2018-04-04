@@ -36,9 +36,7 @@ app.use('/temperature/', function(req, res) {
     var url     = require('url');
     var channel = url.parse(req.url).href;
     channel = channel[1];
-
     res.writeHead(200, {'Content-Type':'text/html'});
-    
     mysqlConn.query("SELECT * FROM temperature WHERE channel=" + channel + " ORDER BY time DESC LIMIT 1000", function (err, result, fields) {
         if (err) throw err;
         //console.log(result);

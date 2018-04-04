@@ -35,14 +35,31 @@
             <div class="pl-1 rounded col-xs-8 justify-content-center" style="width:80%">
                 <nav>
                     <div class="nav nav-pills nav-fill" role="tablist" id="graphTab">
-                        <a class="nav-item nav-link active" id="channel0_tab" href="#channel0_pane" data-toggle="pill" role="tab">Channel 1</a>
-                        <a class="nav-item nav-link"        id="channel1_tab" href="#channel1_pane" data-toggle="pill" role="tab">Channel 2</a>
+                        <a class="nav-item nav-link active" id="channel0_tab" href="#channel0_pane" data-toggle="pill" role="tab">Inside Temp</a>
+                        <a class="nav-item nav-link"        id="channel1_tab" href="#channel1_pane" data-toggle="pill" role="tab">Ambiant Temp</a>
                         <a class="nav-item nav-link"        id="channel2_tab" href="#channel2_pane" data-toggle="pill" role="tab">Channel 3</a>
                         <a class="nav-item nav-link"        id="channel3_tab" href="#channel3_pane" data-toggle="pill" role="tab">Channel 4</a>                    
                     </div>
                 </nav>
                 <div class="container" id="graphContainer">
                     <div class="my-4 tab-content" id="graphTabPanel">
+                        <div class="pr-5 my-2 row">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-outline-primary active">
+                                    <input type="radio" name="timeFrameOptions" id="timeFrameBtn_1" checked> 30m
+                                </label>
+                                <label class="btn btn-outline-primary">
+                                    <input type="radio" name="timeFrameOptions" id="timeFrameBtn_2"> 1h
+                                </label>
+                                <label class="btn btn-outline-primary">
+                                    <input type="radio" name="timeFrameOptions" id="timeFrameBtn_3"> 1d
+                                </label>
+                                <label class="btn btn-outline-primary">
+                                    <input type="radio" name="timeFrameOptions" id="timeFrameBtn_4"> 1w
+                                </label>
+                            </div>
+                        </div>
+                        
                         <div class=" tab-pane fade show active" id="channel0_pane" role="tabpanel">
                             <div class='justify-content-center flot-x-axis flot-x1-axis'>
                                 <div id="Graph0" class="biggraph"></div>
@@ -66,21 +83,21 @@
                         <div class="my-2 row">
                             <div class="col-6">
                                 <h5>Current Temp: </h5>
-                                <h3> <span class="badge badge-secondary">xx C</span></h3>
+                                <h3> <span class="badge badge-secondary" id=currentTempTxt textContent=""></span></h3>
                             </div>
                             <div class="col-6">
                                 <h5>Average Temp: </h5> 
-                                <h3> <span class="badge badge-secondary">xx C</span></h3>
+                                <h3> <span class="badge badge-secondary" id=averageTempTxt></span></h3>
                             </div>
                         </div>
                         <div class="my-2 row">
                             <div class="col-6">
                                 <h5>Min Temp: </h5>
-                                <h3> <span class="badge badge-secondary">xx C</span></h3>
+                                <h3> <span class="badge badge-secondary" id=minTempTxt></span></h3>
                             </div>
                             <div class="col-6">
                                 <h5>Max Temp: </h5>
-                                <h3> <span class="badge badge-secondary">xx C</span></h3>
+                                <h3> <span class="badge badge-secondary" id=maxTempTxt></span></h3>
                             </div>
                         </div>
                     </div>
