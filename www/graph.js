@@ -23,8 +23,8 @@ var options =
         backgroundColor:"black",
     },
     yaxis: {
-        ticks: 10,
-        min: 10,
+        ticks: 15,
+        min: 15,
         max: 30,
         color: "#2E4A62",
         font:{
@@ -36,7 +36,7 @@ var options =
         timeformat: "%d %hh:%M",
         timezone:"browser",
         color:"#2E4A62",
-        ticks: 10,
+        //ticks: 10,
         font:{
             color:"#EEE",
         }
@@ -56,13 +56,32 @@ var graphTimeout;
 
 $(function() {
 
-    graphTimeout = setInterval(getData, 1000, 0);
+    var selectedChannel = 0;
+    var GraphDataArray = Array(4);
+
+    graphTimeout = setInterval(getData, 1000);
+
     $('#graphTab a').on('click', function (e) {
         var channel = e.srcElement.id;
         var channelIdx = channel.search(/[0-9]/);
         
-        getData(channel[channelIdx]);
-        updateDecimalValues(channel[channelIdx]);
+        selectedChannel = channel[channelIdx];
+        graphRedraw(selectedChannel);
+        updateDecimalValues(selectedChannel);
+    });
+
+    $('#timeFrameBtns').on('click', function (e) {
+        var id = e.srcElement.id;
+        var id_idx = id.search(/[0-9]/);
+        console.log(e)
+    });
+    
+    $('#timeFrameBtn_2').on('click', function (e) {
+        console.log("btn2 active");
+    });
+    
+    $('#timeFrameBtn_1').on('click', function (e) {
+        console.log("btn2 active");
     });
     
 
@@ -74,37 +93,36 @@ $(function() {
     }
 
     function graphRedraw(channel){
-        graph[channel].draw();
+        graph[channel] = $.plot("#Graph", [{label: "Temperature", data: GraphDataArray[channel]}], options);
         console.log("Redrawing graph" + channel);
     }
 
-    function getData(channel){
-        console.log("Get Data channel " + channel);
+    function getData(){
+        console.log("Get Data channel " + selectedChannel);
         $.ajax({
-            url: "/temperature/" + channel + "/all",
+            url: "/temperature/" + selectedChannel + "/all",
             success: function(data){
                 var QueryAns = JSON.parse(data);
                 var MonData = [];
                 var tempArray = [];
                 var ActualTime = moment();
                 QueryAns.forEach(element => {
-                    if ( ActualTime.diff(moment(element.time)) < 3600000)
+                    if ( ActualTime.diff(moment(element.time)) < 3600000*3)
                     {
                         MonData.push([moment(element.time), element.tempC]);
                         tempArray.push(element.tempC);
                     }
                 });
                 //console.log(MonData)
-                graph[channel] = $.plot("#Graph" + channel, [{label: "Temperature", data: MonData}], options);
-                CurrentTemp[channel] = tempArray[tempArray.length -1];
+                GraphDataArray[selectedChannel] = MonData;
+                CurrentTemp[selectedChannel] = tempArray[tempArray.length -1];
                 var sum = tempArray.reduce(function(a, b) { return a + b; });
                 var avg = sum / tempArray.length;
-                MaxTemp[channel] = Math.max.apply(null,tempArray);
-                MinTemp[channel] =  Math.min.apply(null,tempArray);
-                AverageTemp[channel] = avg;
-                updateDecimalValues(channel);
-                console.log("Get data success, redrawing...")
-                graph[channel].draw();
+                MaxTemp[selectedChannel] = Math.max.apply(null,tempArray);
+                MinTemp[selectedChannel] =  Math.min.apply(null,tempArray);
+                AverageTemp[selectedChannel] = avg;
+                graphRedraw(selectedChannel);
+                updateDecimalValues(selectedChannel);
             }
         });
     }

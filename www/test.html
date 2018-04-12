@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <script src="./js/jquery-3.3.1.min.js"></script> 
+    <script src="./js/popper.js"></script> 
     <script src="./js/bootstrap.min.js"></script> 
     <script src="./js/moment.js"></script> 
     <script src="./flot/jquery.js"></script> 
@@ -44,41 +45,21 @@
                 <div class="container" id="graphContainer">
                     <div class="my-4 tab-content" id="graphTabPanel">
                         <div class="pr-5 my-2 row">
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-outline-primary active">
-                                    <input type="radio" name="timeFrameOptions" id="timeFrameBtn_1" checked> 30m
-                                </label>
-                                <label class="btn btn-outline-primary">
-                                    <input type="radio" name="timeFrameOptions" id="timeFrameBtn_2"> 1h
-                                </label>
-                                <label class="btn btn-outline-primary">
-                                    <input type="radio" name="timeFrameOptions" id="timeFrameBtn_3"> 1d
-                                </label>
-                                <label class="btn btn-outline-primary">
-                                    <input type="radio" name="timeFrameOptions" id="timeFrameBtn_4"> 1w
-                                </label>
+                            <div class="btn-group" role="group" aria-label="timeFrameBtns">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Time window
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <a class="dropdown-item" href="#">30 min</a>
+                                    <a class="dropdown-item" href="#">1 hour</a>
+                                    <a class="dropdown-item" href="#">1 day</a>
+                                    <a class="dropdown-item" href="#">1 week</a>
+                                </div>
                             </div>
                         </div>
                         
-                        <div class=" tab-pane fade show active" id="channel0_pane" role="tabpanel">
-                            <div class='justify-content-center flot-x-axis flot-x1-axis'>
-                                <div id="Graph0" class="biggraph"></div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="channel1_pane"  role="tabpanel">
-                            <div class='justify-content-center flot-x-axis flot-x1-axis'>
-                                <div id="Graph1" class="biggraph"></div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="channel2_pane" role="tabpanel">
-                            <div class='justify-content-center flot-x-axis flot-x1-axis'>
-                                <div id="Graph2" class="biggraph"></div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="channel3_pane" role="tabpanel">
-                            <div class='justify-content-center flot-x-axis flot-x1-axis'>
-                                <div id="Graph3" class="biggraph"></div>
-                            </div>
+                        <div class='justify-content-center flot-x-axis flot-x1-axis'>
+                            <div id="Graph" class="biggraph"></div>
                         </div>
                         <div class="my-2 row">
                             <div class="col-6">
